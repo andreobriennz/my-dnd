@@ -16,7 +16,6 @@ class Monsters
 
     def get_monsters
         url = 'https://api.open5e.com/v1/monsters/?'+@query
-        print('Get', url)
         response = RestClient.get(url)
         JSON.parse(response)
     end

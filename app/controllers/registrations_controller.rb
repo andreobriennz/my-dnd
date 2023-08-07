@@ -16,6 +16,6 @@ class RegistrationsController < ApplicationController
     private
 
     def user_params
-        params.require(:user).permit(:email, :username, :password, :password_confirmation) # same as params[:user] but has error if not found and prevent editing other fields eg admin
+        params.require(:user).permit(:email, :username, :password, :password_confirmation)
     end
 end

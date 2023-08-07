@@ -2,7 +2,6 @@ class AdventuresController < ApplicationController
     def show
         @campaign = get_campaign
         @adventure = Adventure.find_by(:slug => params['adventure_slug'])
-        print "HEREEE", params['adventure_slug'], "END"
         @is_owner = Current.user ? @campaign.user_id.to_s == Current.user.id.to_s : false
     end
     
@@ -18,12 +17,9 @@ class AdventuresController < ApplicationController
         adventure = Adventure.new allowed_params
         adventure.user_id = Current.user.id
         adventure.campaign_slug = campaign['slug']
-        print "??"
-        print adventure.save!
         if adventure.save
             redirect_to "/campaigns/#{campaign['slug']}/adventures/#{adventure['slug']}", notice: "New Adventure Created"
         else
-            print "WHAT???"
             render :new
         end
     end
