@@ -1,0 +1,50 @@
+<% if @my_spells.length > 0 %>
+    <div class="container my-5">
+        <h2>My Spells</h2>
+    </div>
+
+    <div class="container my-5">
+        <table class="table">
+            <tbody>
+                <% @my_spells.each do |slug| %>
+                    <tr>
+                        <td>
+                            <a class="btn btn-link" href="/spells/<%=slug%>/">
+                                <strong>
+                                    <%= slug.gsub('-', ' ').titleize %>
+                                </strong>
+                            </a>
+                        </td>
+                        <td>
+                            <%= save_spell_button slug %>
+                        </td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+<% end %>
+
+
+<div class="container my-5">
+    <h2>All Spells</h2>
+</div>
+
+<div class="container my-5">
+    <table class="table">
+        <tbody>
+            <% @all_spells.each do |slug| %>
+                <tr>
+                    <td>
+                        <a class="btn btn-link" href="/spells/<%=slug%>/">
+                            <strong><%= slug.gsub('-', ' ').titleize %></strong>
+                        </a>
+                    </td>
+                    <td>
+                        <%= save_spell_button slug %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

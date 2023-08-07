@@ -1,0 +1,17 @@
+<div class="container m-5">
+    <h1 class="mb-4">My Campaigns</h1>
+
+    <% for campaign in @campaigns %>
+        <div class="mb-4">
+            <a href="<%= campaigns_path %>/<%= campaign.slug %>">
+                <strong><%= campaign.title %></strong>
+            </a>
+        </div>
+    <% end %>
+
+    <% if Current.user %>
+        <%= link_to "Add Campaign", campaigns_create_path, class: "btn btn-primary"  %>
+    <% else %>
+        <%= link_to "Log in", sign_in_path %> or <%= link_to "sign up", sign_up_path %> to create campaigns.
+    <% end %>
+</div>

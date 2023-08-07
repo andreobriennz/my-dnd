@@ -1,0 +1,56 @@
+<% if @is_owner == true %>
+    <div class="container m-5">
+        <h1><%= @adventure['title'] %> (<%= @campaign['title'] %>)</h1>
+        <p><a href="<%= "#{campaigns_path}/#{@campaign['slug']}" %>">Go to Campaign</a></p>
+
+        <%= form_with model: @adventure, url: "/campaigns/#{@campaign['slug']}/adventures/#{@adventure['slug']}", local: true, method: :put do |form| %>
+            <div class="mb-3">
+                <%= form.label :title %>
+                <%= form.text_field :title, class: "form-control" %>
+            </div>
+            <div class="mb-3">
+                <%= form.label :subtitle %>
+                <%= form.text_field :subtitle, class: "form-control" %>
+            </div>
+            <div class="mb-3">
+                <%= form.label :description %>
+                <%= form.text_area :description, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+                <%= form.label :date_started %>
+                <%= form.date_field :date_started %>
+            </div>
+
+            <div class="mb-3">
+                <%= form.label :shared_notes %>
+                <%= form.text_area :shared_notes, class: "form-control" %>
+            </div>
+            <div class="mb-3">
+                <%= form.label :private_notes %>
+                <%= form.text_area :private_notes, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+                <%= form.label :public %>
+                <%= form.check_box :public, class: "form-check-input" %>
+            </div>
+            <div class="mb-3">
+                <%= form.label :archived %>
+                <%= form.check_box :archived, class: "form-check-input" %>
+            </div>
+
+            <%= form.submit "Save", data: {turbo: false}, class: "btn btn-primary" %>
+        <% end %>
+    </div>
+<% else %>
+    <div class="container m-5">
+        <h1><%= @adventure['title'] %></h1>
+        <h4><%= @adventure['subtitle'] %></h4>
+        <p><%= @adventure['description'] %></p>
+        <p>Dates: <%= @adventure['date_started'] %> - <%= @adventure['date_ended'] %></p>
+
+        <h2 class="mt-5">Notes</h2>
+        <p><%= @adventure['shared_notes'] %></p>
+    </div>
+<% end %>

@@ -1,0 +1,68 @@
+<div class="container my-5">
+    <h1><%= @monster['name'] %></h1>
+
+    <% if @monster['desc'] != '' %>
+        <div class="my-5">
+            <h2>Description:</h2>
+            <p><%= @monster['desc'] %></p>
+        </div>
+    <% end %>
+
+    <div class="my-5">
+        <h2>Stats</h2>
+        <p><strong>
+            Armor Class: <%= @monster['armor_class'] %>
+            <% if @monster['armor_desc'] != '' %>(<%= @monster['armor_desc'].titleize %>)<% end %>
+        </strong></p>
+
+        <p><strong>Hit Points: <%= @monster['hit_points'] %></strong></p>
+
+        <p><strong>Hit Dice: <%= @monster['hit_dice'] %></strong></p>
+
+        <p><strong>Speed: <%= @monster['speed']['walk'] %></strong></p>
+
+        <p><strong>Typical alignment: <%= @monster['alignment'].titleize %></strong></p>
+
+        <p><strong>Challenge Rating: <%= @monster['challenge_rating'] %></strong></p>
+    </div>
+
+    <div class="my-5">
+        <h2>Abilities</h2>
+        <%= get_ability_modifiers @monster %>
+    </div>
+
+    <div class="my-5">
+        <h2>Saving Throws</h2>
+        <%= hash_to_html_list @monster, ['strength_save', 'dexterity_save', 'constitution_save', 'intelligence_save', 'wisdom_save', 'charisma_save'] %>
+    </div>
+
+    <div class="my-5">
+        <h2>Skills</h2>
+        <%= array_to_html_list @monster['skills'] %>
+    </div>
+
+    <div class="my-5">
+        <h2>Actions</h2>
+        <% for action in @monster['actions'] %>
+            <p><strong><%= action['name'] %>:</strong> <%= action['desc'] %></p>
+            <% if action['attack_bonus'] || action['damage_dice'] || action['damage_bonus'] %>
+                <p>Attack Bonus: <%= action['attack_bonus'] %></p>
+                <p>Damage Dice: <%= action['damage_dice'] %></p>
+                <p>Damage Bonus: <%= action['damage_bonus'] %></p>
+            <% end %>
+        <% end %>
+    </div>
+
+    <% if @monster['spell_list'].length > 0 %>
+        <div class="my-5">
+            <h2>Spells</h2>
+            <%= array_to_html_links @monster['spell_list'] %>
+        </div>
+    <% end %>
+
+    <p><strong>Page: <%= @monster['page_no'] != '' ? @monster['page_no'] : '-' %></strong></p>
+
+    <div class="my-5">
+        <%= save_monster_button @monster['slug'] %>
+    </div>
+</div>

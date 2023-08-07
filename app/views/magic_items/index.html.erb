@@ -1,0 +1,79 @@
+<div class="container my-5">
+    <h1>Magic Items</h1>
+</div>
+
+<div class="container my-5">
+    <h2>My Magic Items</h2>
+</div>
+
+<div class="container my-5">
+    <div class="accordion" id="myItemsAccordion">
+        <% if @my_items %>
+            <% @my_items.each do |item| %>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=item['slug']%>" aria-expanded="false" aria-controls="collapse<%=item['slug']%>">
+                            <%= item['name'] %>
+                        </button>
+                    </h2>
+                    <div id="collapse<%=item['slug']%>" class="accordion-collapse collapse" data-bs-parent="#myItemsAccordion">
+                        <div class="accordion-body">
+                            <p><%= item['desc'] %></p>
+                            <p><strong>Rarity: <%= item['rarity'].titleize %></strong></p>
+                            <%= save_magic_item_button item['slug'] %>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
+
+<div class="container mt-5">
+    <h2>Search All Magic Items</h2>
+</div>
+
+<div class="container mb-5">
+    <form action="/magic-items/" method="GET" class="w-50">
+        <div class="mb-2">
+            <label for="search" class="form-label">Search Items</label>
+            <input type="text" name="search" value="<%=params[:search]%>" placeholder="Search..." class="form-control" aria-label="Search magic items">
+        </div>
+        <div class="mb-2">
+            <label for="rarity" class="form-label">Rarity</label>
+            <select name="rarity" id="rarity" class="form-select" aria-label="Filter by item rarity">
+                <option value="">All</option>
+                <option value="common">Common</option>
+                <option value="uncommon">Uncommon</option>
+                <option value="rare">Rare</option>
+                <option value="very rare">Very Rare</option>
+                <option value="legendary">Legendary</option>
+            </select>
+        </div>
+
+        <input type="submit" value="Search" class="btn btn-primary">
+        <%= link_to "Clear Filters", magic_items_path, class: "btn btn-link" %>
+    </form>
+</div>
+
+<div class="container my-5">
+    <div class="accordion" id="itemsAccordion">
+        <% @all_items.each do |item| %>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=item['slug']%>" aria-expanded="false" aria-controls="collapse<%=item['slug']%>">
+                        <%= item['name'] %>
+                    </button>
+                </h2>
+                <div id="collapse<%=item['slug']%>" class="accordion-collapse collapse" data-bs-parent="#itemsAccordion">
+                    <div class="accordion-body">
+                        <p><%= item['desc'] %></p>
+                        <p><strong>Rarity: <%= item['rarity'].titleize %></strong></p>
+                        <%= save_magic_item_button item['slug'] %>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
