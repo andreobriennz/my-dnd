@@ -35,14 +35,14 @@ default: &default
 
 development:
   <<: *default
-  database: my_dnd_2
+  database: <%= ENV['DATABASE_NAME'] %>
 
-# test:
-#   <<: *default
-#   database: project_test
+test:
+  <<: *default
+  database: <%= ENV['DATABASE_NAME'] %>
 
-# production:
-#   <<: *default
-#   database: project_production
-#   username: username
-#   password: <%= ENV['PROJECT_DATABASE_PASSWORD'] %>
+production:
+  <<: *default
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
