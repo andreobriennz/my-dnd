@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_05_053733) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_08_022537) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,6 +28,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_05_053733) do
     t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "campaign_id", null: false
+    t.index ["campaign_id"], name: "index_adventures_on_campaign_id"
   end
 
   create_table "campaigns", force: :cascade do |t|
@@ -41,9 +43,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_05_053733) do
     t.date "date_started"
     t.date "date_ended"
     t.string "slug"
-    t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_campaigns_on_user_id"
   end
 
   create_table "homes", force: :cascade do |t|
@@ -72,4 +75,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_05_053733) do
     t.string "saved_armor", default: [], array: true
   end
 
+  add_foreign_key "adventures", "campaigns"
+  add_foreign_key "campaigns", "users"
 end

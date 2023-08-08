@@ -1,7 +1,8 @@
 class Campaign < ApplicationRecord
-    before_create :set_defaults
-
     belongs_to :user
+    has_many :adventures
+    
+    before_create :set_defaults
 
     private
 

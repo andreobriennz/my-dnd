@@ -1,8 +1,12 @@
 class AdventuresController < ApplicationController    
     def show
-        @campaign = get_campaign
-        @adventure = Adventure.find_by(:slug => params['adventure_slug'])
-        @is_owner = Current.user ? @campaign.user_id.to_s == Current.user.id.to_s : false
+        @campaign = get_campaign(false)
+        if @campaign
+            @adventure = Adventure.find_by(:slug => params['adventure_slug'])
+            @is_owner = Current.user ? @campaign.user_id.to_s == Current.user.id.to_s : false
+        else
+            redirect_to "/404"
+        end
     end
     
     def new
@@ -11,25 +15,24 @@ class AdventuresController < ApplicationController
     end
     
     def create
-        campaign = get_campaign
-        return nil if campaign == nil # cannot find or no permission
+        @campaign = get_campaign
+        return nil if @campaign == nil
 
-        adventure = Adventure.new allowed_params
-        adventure.user_id = Current.user.id
-        adventure.campaign_slug = campaign['slug']
-        if adventure.save
-            redirect_to "/campaigns/#{campaign['slug']}/adventures/#{adventure['slug']}", notice: "New Adventure Created"
+        adventure_params = { **allowed_params, user_id: Current.user.id }
+        @adventure = @campaign.adventures.create adventure_params
+        if @adventure.save
+            redirect_to "/campaigns/#{@campaign['slug']}/adventures/#{@adventure['slug']}", notice: "New Adventure Created"
         else
-            render :new
+            render json: @adventure.errors
+            # render :new
         end
     end
 
     def edit
         campaign = get_campaign
-        adventure = Adventure.find_by(:slug => params['adventure_slug'])
-        is_owner = Current.user ? campaign.user_id.to_s == Current.user.id.to_s : false
-        return nil if is_owner != true
+        return nil if !campaign
 
+        adventure = Adventure.find_by(:slug => params['adventure_slug'])
         adventure.attributes = allowed_params
         if adventure.save
             redirect_to "#{campaigns_path}/#{params['campaign_slug']}/adventures/#{params['adventure_slug']}", notice: "Campaign Updated"
@@ -40,13 +43,20 @@ class AdventuresController < ApplicationController
     
     private
 
-    def get_campaign
+    def is_owner campaign
+        Current.user ? campaign.user_id == Current.user.id : false
+    end
+
+    def get_campaign(must_be_owner=true)
+        # returns nil if not found or no permissions (pass true to allow if publiclly visible)
         campaign = Campaign.find_by(:slug => params['campaign_slug'])
-        current_user_id = Current.user ? Current.user.id.to_s : nil
-        if campaign.user_id.to_s == current_user_id || campaign.public
-          campaign
+        is_owner = Current.user ? Current.user.id == campaign.user_id : false
+        is_public = campaign.public
+
+        if is_owner || (is_public && must_be_owner == false)
+            return campaign
         else
-          nil
+            return nil
         end
     end
     
