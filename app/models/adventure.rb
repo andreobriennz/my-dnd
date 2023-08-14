@@ -14,6 +14,6 @@ class Adventure < ApplicationRecord
     def set_defaults
         require 'securerandom'
         self.slug ||= SecureRandom.hex(4) # set only if doesn't exist
-        # self.user_id ||= Current.user.id
+        self.user_id ||= Current.user.id
     end
 end
