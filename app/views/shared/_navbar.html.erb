@@ -13,7 +13,7 @@
             <%= link_to "Spells", spells_path, class: "nav-item nav-link" %>
             <%= link_to "Monsters", monsters_path, class: "nav-item nav-link" %>
 
-            <% if Current.user %>
+            <% if is_logged_in? %>
                 <%= button_to "Sign Out", sign_out_path, method: :delete, class: "nav-item nav-link" %>
             <% else %>
                 <%= link_to "Sign Up", sign_up_path, class: "nav-item nav-link" %>

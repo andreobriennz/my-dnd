@@ -9,7 +9,7 @@
         </div>
     <% end %>
 
-    <% if Current.user %>
+    <% if is_logged_in? %>
         <%= link_to "Add Campaign", campaigns_create_path, class: "btn btn-primary"  %>
     <% else %>
         <%= link_to "Log in", sign_in_path %> or <%= link_to "sign up", sign_up_path %> to create campaigns.

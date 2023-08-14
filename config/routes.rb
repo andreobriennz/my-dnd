@@ -1,35 +1,43 @@
 Rails.application.routes.draw do
-  root "home#index"
+    root "home#index"
 
-  get "sign-up", to: "registrations#new"
-  post "sign-up", to: "registrations#create"
-  get "sign-in", to: "sessions#new"
-  post "sign-in", to: "sessions#create"
-  delete "sign-out", to: "sessions#destroy"
+    get "sign-up", to: "registrations#new"
+    post "sign-up", to: "registrations#create"
+    get "sign-in", to: "sessions#new"
+    post "sign-in", to: "sessions#create"
+    delete "sign-out", to: "sessions#destroy"
 
-  # api based pages - view and save items
-  get "/magic-items", to: "magic_items#index"
-  get "/magic-items/json", to: "magic_items#index_json"
-  patch "/user/magic-items", to: "user#update_magic_items"
-  
-  get "/monsters", to: "monsters#index"
-  get "/monsters/:slug", to: "monsters#show"
-  patch "/user/monsters", to: "user#update_monsters"
+    # api based pages - view and save items
+    get "/magic-items", to: "magic_items#index"
+    get "/magic-items/json", to: "magic_items#index_json"
+    patch "/user/magic-items", to: "user#update_magic_items"
 
-  get "/spells", to: "spells#index"
-  get "/spells/:slug", to: "spells#show"
-  patch "/user/spells", to: "user#update_spells"
+    get "/monsters", to: "monsters#index"
+    get "/monsters/:slug", to: "monsters#show"
+    patch "/user/monsters", to: "user#update_monsters"
 
-  # adventures
-  get "campaigns/:campaign_slug/adventures/create", to: "adventures#new"
-  post "campaigns/:campaign_slug/adventures/create", to: "adventures#create"
-  get "campaigns/:campaign_slug/adventures/:adventure_slug", to: "adventures#show"
-  put "campaigns/:campaign_slug/adventures/:adventure_slug", to: "adventures#edit"
+    get "/spells", to: "spells#index"
+    get "/spells/:slug", to: "spells#show"
+    patch "/user/spells", to: "user#update_spells"
 
-  # campaigns
-  get "campaigns", to: "campaigns#index"
-  get "campaigns/create", to: "campaigns#new"
-  post "campaigns/create", to: "campaigns#create"
-  get "campaigns/:campaign_slug", to: "campaigns#show"
-  put "campaigns/:campaign_slug", to: "campaigns#edit"
+    # adventures
+    get "campaigns/:campaign_slug/adventures/create", to: "adventures#new"
+    post "campaigns/:campaign_slug/adventures/create", to: "adventures#create"
+    get "campaigns/:campaign_slug/adventures/:adventure_slug", to: "adventures#show"
+    put "campaigns/:campaign_slug/adventures/:adventure_slug", to: "adventures#edit"
+
+    # campaigns
+    get "campaigns", to: "campaigns#index"
+    get "campaigns/create", to: "campaigns#new"
+    post "campaigns/create", to: "campaigns#create"
+    get "campaigns/:campaign_slug", to: "campaigns#show"
+    put "campaigns/:campaign_slug", to: "campaigns#edit"
+
+    # comments
+    resources :campaigns do
+        resources :comments, only: [:create]
+    end
+    resources :adventures do
+        resources :comments, only: [:create]
+    end
 end

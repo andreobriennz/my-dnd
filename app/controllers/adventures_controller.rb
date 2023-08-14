@@ -3,9 +3,8 @@ class AdventuresController < ApplicationController
         @campaign = get_campaign(false)
         if @campaign
             @adventure = Adventure.find_by(:slug => params['adventure_slug'])
-            @is_owner = Current.user ? @campaign.user_id.to_s == Current.user.id.to_s : false
-        else
-            redirect_to "/404"
+            @is_owner = is_owner? @campaign
+            @comments = @adventure.comments.order(:created_at)
         end
     end
     
@@ -24,7 +23,6 @@ class AdventuresController < ApplicationController
             redirect_to "/campaigns/#{@campaign['slug']}/adventures/#{@adventure['slug']}", notice: "New Adventure Created"
         else
             render json: @adventure.errors
-            # render :new
         end
     end
 
@@ -43,19 +41,24 @@ class AdventuresController < ApplicationController
     
     private
 
-    def is_owner campaign
-        Current.user ? campaign.user_id == Current.user.id : false
+    def is_owner? campaign_or_adventure
+        Current.user ? campaign_or_adventure.user_id.to_i == Current.user.id.to_i : false
     end
 
     def get_campaign(must_be_owner=true)
         # returns nil if not found or no permissions (pass true to allow if publiclly visible)
         campaign = Campaign.find_by(:slug => params['campaign_slug'])
-        is_owner = Current.user ? Current.user.id == campaign.user_id : false
-        is_public = campaign.public
+        adventure = Adventure.find_by(:slug => params['adventure_slug'])
+        is_owner = is_owner? adventure
+        is_public = adventure&.public
 
         if is_owner || (is_public && must_be_owner == false)
             return campaign
+        elsif adventure
+            render html: 'Adventure is not public'
+            return nil
         else
+            render html: '404: Adventure Not Found'
             return nil
         end
     end

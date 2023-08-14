@@ -6,12 +6,11 @@ class CampaignsController < ApplicationController
 
     def show
         @campaign = get_campaign(false)
-        if @campaign != nil
+        if @campaign
             @owner = User.find_by(:id => @campaign.user_id.to_i)
-            @is_owner = Current.user ? @campaign.user_id.to_s == Current.user.id.to_s : false
+            @is_owner = is_owner? @campaign
             @adventures = get_adventures @campaign
-        else
-            redirect_to '/404'
+            @comments = @campaign.comments.order(:created_at)    
         end
     end
 
@@ -20,8 +19,7 @@ class CampaignsController < ApplicationController
     end
 
     def create
-        user = Current.user
-        campaign = user.campaigns.create allowed_params
+        campaign = Current.user.campaigns.create allowed_params
         if campaign.save
             redirect_to "#{campaigns_path}/#{campaign.slug}", notice: "New Campaign Created"
         else
@@ -43,19 +41,31 @@ class CampaignsController < ApplicationController
 
     private
 
+    def is_owner? campaign_or_adventure
+        Current.user ? Current.user.id.to_i == campaign_or_adventure.user_id.to_i : false
+    end
+
     def get_adventures campaign
-        campaign.adventures.order(date_started: :desc)
+        adventures = campaign.adventures.order(date_started: :desc)
+        adventures.select do |adventure|
+            is_owner = is_owner? adventure
+            adventure&.public || is_owner
+            # true
+        end
     end
 
     def get_campaign(must_be_owner=true)
         # returns nil if not found or no permissions (pass true to allow if publiclly visible)
         campaign = Campaign.find_by(:slug => params['campaign_slug'])
-        is_owner = Current.user ? Current.user.id == campaign.user_id : false
-        is_public = campaign.public
-
+        is_owner = is_owner? campaign
+        is_public = campaign&.public
         if is_owner || (is_public && must_be_owner == false)
             return campaign
+        elsif campaign
+            render html: 'Campaign is not public'
+            return nil
         else
+            render html: '404: Campaign Not Found'
             return nil
         end
     end
