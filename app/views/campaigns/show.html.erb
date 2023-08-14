@@ -1,85 +1,100 @@
-<div class="container m-5">
-    <div class="row">
-        <div class="col-sm">
-            <%# Campaign %>
-            <% if @is_owner == true %>
-                <h1><%= @campaign['title'] %></h1>
+<% if @is_owner == true %>
+    <div class="container mt-5 accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Edit Campaign
+                </button>
+            </h2>
 
-                <%= form_with model: @campaign, url: "/campaigns/#{@campaign['slug']}", local: true, method: :put do |form| %>
-                    <div class="mb-3">
-                        <%= form.label :title %>
-                        <%= form.text_field :title, class: "form-control" %>
-                    </div>
-                    <div class="mb-3">
-                        <%= form.label :subtitle %>
-                        <%= form.text_field :subtitle, class: "form-control" %>
-                    </div>
-                    <div class="mb-3">
-                        <%= form.label :description %>
-                        <%= form.text_area :description, class: "form-control" %>
-                    </div>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="container m-5">
+                        <%= form_with model: @campaign, url: "/campaigns/#{@campaign['slug']}", local: true, method: :put do |form| %>
+                            <div class="mb-3">
+                                <%= form.label :title %>
+                                <%= form.text_field :title, class: "form-control" %>
+                            </div>
+                            <div class="mb-3">
+                                <%= form.label :subtitle %>
+                                <%= form.text_field :subtitle, class: "form-control" %>
+                            </div>
+                            <div class="mb-3">
+                                <%= form.label :description %>
+                                <%= form.text_area :description, class: "form-control" %>
+                            </div>
 
-                    <div class="mb-3">
-                        <%= form.label :date_started %>
-                        <%= form.date_field :date_started %>
-                    </div>
-                    <div class="mb-3">
-                        <%= form.label :date_ended %>
-                        <%= form.date_field :date_ended %>
-                    </div>
+                            <div class="mb-3">
+                                <%= form.label :date_started %>
+                                <%= form.date_field :date_started %>
+                            </div>
+                            <div class="mb-3">
+                                <%= form.label :date_ended %>
+                                <%= form.date_field :date_ended %>
+                            </div>
 
-                    <div class="mb-3">
-                        <%= form.label :shared_notes %>
-                        <%= form.text_area :shared_notes, class: "form-control" %>
-                    </div>
-                    <div class="mb-3">
-                        <%= form.label :private_notes %>
-                        <%= form.text_area :private_notes, class: "form-control" %>
-                    </div>
+                            <div class="mb-3">
+                                <%= form.label :shared_notes %>
+                                <%= form.text_area :shared_notes, class: "form-control" %>
+                            </div>
+                            <div class="mb-3">
+                                <%= form.label :private_notes %>
+                                <%= form.text_area :private_notes, class: "form-control" %>
+                            </div>
 
-                    <div class="mb-3">
-                        <%= form.label :public %>
-                        <%= form.check_box :public, class: "form-check-input" %>
-                    </div>
-                    <div class="mb-3">
-                        <%= form.label :archived %>
-                        <%= form.check_box :archived, class: "form-check-input" %>
-                    </div>
+                            <div class="mb-3">
+                                <%= form.label :public %>
+                                <%= form.check_box :public, class: "form-check-input" %>
+                            </div>
+                            <div class="mb-3">
+                                <%= form.label :archived %>
+                                <%= form.check_box :archived, class: "form-check-input" %>
+                            </div>
 
-                    <%= form.submit "Save", data: {turbo: false}, class: "btn btn-primary" %>
-                <% end %>
-            <% else %>
-                <div>
-                    <h1><%= @campaign['title'] %></h1>
-                    <h4><%= @campaign['subtitle'] %></h4>
-                    <p><%= @campaign['description'] %></p>
-                    <p>Dates: <%= @campaign['date_started'] %> - <%= @campaign['date_ended'] %></p>
-
-                    <h3 class="mt-5">Shared Notes:</h3>
-                    <p><%= markdown @campaign['shared_notes'] %></p>
+                            <%= form.submit "Save", data: {turbo: false}, class: "btn btn-primary" %>
+                        <% end %>
+                    </div>
                 </div>
-            <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col">
+            <div>
+                <h1><%= @campaign['title'] %></h1>
+                <h4><%= @campaign['subtitle'] %></h4>
+                <p><%= @campaign['description'] %></p>
+                <p>Dates: <%= @campaign['date_started'] %> - <%= @campaign['date_ended'] %></p>
+
+                <h3 class="mt-5">Shared Notes:</h3>
+                <p><%= markdown @campaign['shared_notes'] %></p>
+            </div>
         </div>
 
-        <%# Campaign Adventures %>
-        <div class="col-sm">
-            <h2>Adventures</h2>
-            <% for adventure in @adventures %>
-                <div class="my-2">
-                    <a href="<%= campaigns_path %>/<%= @campaign['slug'] %>/adventures/<%= adventure['slug'] %>">
-                        <%= adventure['title'] %>
-                        <% if adventure['date_started'] %>(<%= adventure['date_started'] %>)<% end %>
-                    </a>
-                </div>
-            <% end %>
-            <% if @is_owner == true %>
-                <%= link_to "New Adventure", "/campaigns/#{@campaign["slug"]}/adventures/create", class: "mt-3 btn btn-primary" %>
-            <% end %>
+        <div class="col">
+            <%# Campaign Adventures %>
+            <div class="col-sm">
+                <h2>Adventures</h2>
+                <% for adventure in @adventures %>
+                    <div class="my-2">
+                        <a href="<%= campaigns_path %>/<%= @campaign['slug'] %>/adventures/<%= adventure['slug'] %>">
+                            <%= adventure['title'] %>
+                            <% if adventure['date_started'] %>(<%= adventure['date_started'] %>)<% end %>
+                        </a>
+                    </div>
+                <% end %>
+                <% if @is_owner == true %>
+                    <%= link_to "New Adventure", "/campaigns/#{@campaign["slug"]}/adventures/create", class: "mt-3 btn btn-primary" %>
+                <% end %>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="container m-5 w-50">
+<div class="container m-5">
     <h4>Comments</h4>
     <ul class="list-group list-group-flush mb-3">
         <% for comment in @comments %>
