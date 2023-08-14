@@ -7,8 +7,6 @@ class CampaignsController < ApplicationController
     def show
         @campaign = get_campaign(false)
         if @campaign
-            @owner = User.find_by(:id => @campaign.user_id.to_i)
-            @is_owner = is_owner? @campaign
             @adventures = get_adventures @campaign
             @comments = @campaign.comments.order(:created_at)    
         end
@@ -41,25 +39,23 @@ class CampaignsController < ApplicationController
 
     private
 
-    def is_owner? campaign_or_adventure
-        Current.user ? Current.user.id.to_i == campaign_or_adventure.user_id.to_i : false
+    def is_owner? item
+        Current.user ? Current.user.id.to_i == item.user_id.to_i : false
+    end
+
+    def has_permission? item, must_be_owner=true
+        is_owner = is_owner? item
+        is_owner || (item&.public && must_be_owner == false)
     end
 
     def get_adventures campaign
         adventures = campaign.adventures.order(date_started: :desc)
-        adventures.select do |adventure|
-            is_owner = is_owner? adventure
-            adventure&.public || is_owner
-            # true
-        end
+        adventures.select { |adventure| has_permission? adventure, false }
     end
 
     def get_campaign(must_be_owner=true)
-        # returns nil if not found or no permissions (pass true to allow if publiclly visible)
         campaign = Campaign.find_by(:slug => params['campaign_slug'])
-        is_owner = is_owner? campaign
-        is_public = campaign&.public
-        if is_owner || (is_public && must_be_owner == false)
+        if campaign && has_permission? campaign, must_be_owner
             return campaign
         elsif campaign
             render html: 'Campaign is not public'

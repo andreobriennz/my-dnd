@@ -2,7 +2,6 @@ class AdventuresController < ApplicationController
     def show
         @campaign = get_campaign(false)
         @adventure = Adventure.find_by(:slug => params['adventure_slug'])
-        @is_owner = is_owner? @adventure
         @comments = @adventure.comments.order(:created_at)
     end
     
@@ -39,18 +38,20 @@ class AdventuresController < ApplicationController
     
     private
 
-    def is_owner? campaign_or_adventure
-        Current.user ? campaign_or_adventure.user_id.to_i == Current.user.id.to_i : false
-        # render html: "#{campaign_or_adventure.user_id} + #{Current.user.id}"
+    def is_owner? item
+        Current.user ? item.user_id.to_i == Current.user.id.to_i : false
+    end
+
+    def has_permission? item, must_be_owner=true
+        is_owner = is_owner? item
+        is_owner || (item&.public && must_be_owner == false)
     end
 
     def get_campaign(must_be_owner=true)
-        # returns nil if not found or no permissions (pass true to allow if publiclly visible)
         campaign = Campaign.find_by(:slug => params['campaign_slug'])
         adventure = Adventure.find_by(:slug => params['adventure_slug'])
-        is_owner = is_owner? campaign
-
-        if is_owner || (adventure.public && must_be_owner == false)
+        
+        if adventure && has_permission? adventure, must_be_owner
             return campaign
         elsif adventure
             render html: 'Adventure is not public'
