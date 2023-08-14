@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_08_022537) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_13_233941) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,6 +49,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_022537) do
     t.index ["user_id"], name: "index_campaigns_on_user_id"
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.text "text"
+    t.bigint "adventure_id"
+    t.bigint "campaign_id"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "commentable_type", null: false
+    t.bigint "commentable_id", null: false
+    t.index ["adventure_id"], name: "index_comments_on_adventure_id"
+    t.index ["campaign_id"], name: "index_comments_on_campaign_id"
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "homes", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -77,4 +92,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_022537) do
 
   add_foreign_key "adventures", "campaigns"
   add_foreign_key "campaigns", "users"
+  add_foreign_key "comments", "adventures"
+  add_foreign_key "comments", "campaigns"
+  add_foreign_key "comments", "users"
 end
