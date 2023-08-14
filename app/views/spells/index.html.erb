@@ -1,4 +1,4 @@
-<% if @my_spells.length > 0 %>
+<% if @my_spells.any? %>
     <div class="container my-5">
         <h2>My Spells</h2>
     </div>
@@ -9,9 +9,9 @@
                 <% @my_spells.each do |slug| %>
                     <tr>
                         <td>
-                            <a class="btn btn-link" href="/spells/<%=slug%>/">
+                            <a class="btn btn-link" href="<%= to_url spells_path, slug %>">
                                 <strong>
-                                    <%= slug.gsub('-', ' ').titleize %>
+                                    <%= to_title slug %>
                                 </strong>
                             </a>
                         </td>
@@ -36,8 +36,8 @@
             <% @all_spells.each do |slug| %>
                 <tr>
                     <td>
-                        <a class="btn btn-link" href="/spells/<%=slug%>/">
-                            <strong><%= slug.gsub('-', ' ').titleize %></strong>
+                        <a class="btn btn-link" href="<%= to_url spells_path, slug %>">
+                            <strong><%= to_title slug %></strong>
                         </a>
                     </td>
                     <td>

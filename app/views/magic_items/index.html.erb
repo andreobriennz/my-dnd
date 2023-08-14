@@ -69,7 +69,7 @@
                 <div id="collapse<%=item['slug']%>" class="accordion-collapse collapse" data-bs-parent="#itemsAccordion">
                     <div class="accordion-body">
                         <p><%= item['desc'] %></p>
-                        <p><strong>Rarity: <%= item['rarity'].titleize %></strong></p>
+                        <p><strong>Rarity: <%= to_title item['rarity'] %></strong></p>
                         <%= save_magic_item_button item['slug'] %>
                     </div>
                 </div>

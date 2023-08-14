@@ -53,14 +53,14 @@
         <% end %>
     </div>
 
-    <% if @monster['spell_list'].length > 0 %>
+    <% if @monster['spell_list'].any? %>
         <div class="my-5">
             <h2>Spells</h2>
             <%= array_to_html_links @monster['spell_list'] %>
         </div>
     <% end %>
 
-    <p><strong>Page: <%= @monster['page_no'] != '' ? @monster['page_no'] : '-' %></strong></p>
+    <p><strong>Page: <%= @monster['page_no'] %></strong></p>
 
     <div class="my-5">
         <%= save_monster_button @monster['slug'] %>

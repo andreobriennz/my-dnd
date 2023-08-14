@@ -3,7 +3,7 @@
 
     <% for campaign in @campaigns %>
         <div class="mb-4">
-            <a href="<%= campaigns_path %>/<%= campaign.slug %>">
+            <a href="<%= campaign_path campaign.slug %>">
                 <strong><%= campaign.title %></strong>
             </a>
         </div>

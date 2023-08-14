@@ -1,70 +1,15 @@
-<%# todo: add helper: `is_owner @adventure`, `is_owner @campaign`, `is_owner @comment` %>
-<% if @is_owner == true %>
-    <div class="container mt-5 accordion" id="accordionExample">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Edit Adventure
-                </button>
-            </h2>
-
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <div class="container m-5">
-                        <%= form_with model: @adventure, url: "/campaigns/#{@campaign['slug']}/adventures/#{@adventure['slug']}", local: true, method: :put do |form| %>
-                            <div class="mb-3">
-                                <%= form.label :title %>
-                                <%= form.text_field :title, class: "form-control" %>
-                            </div>
-                            <div class="mb-3">
-                                <%= form.label :subtitle %>
-                                <%= form.text_field :subtitle, class: "form-control" %>
-                            </div>
-                            <div class="mb-3">
-                                <%= form.label :description %>
-                                <%= form.text_area :description, class: "form-control" %>
-                            </div>
-
-                            <div class="mb-3">
-                                <%= form.label :date_started %>
-                                <%= form.date_field :date_started %>
-                            </div>
-
-                            <div class="mb-3">
-                                <%= form.label :shared_notes %>
-                                <%= form.text_area :shared_notes, class: "form-control" %>
-                            </div>
-                            <div class="mb-3">
-                                <%= form.label :private_notes %>
-                                <%= form.text_area :private_notes, class: "form-control" %>
-                            </div>
-
-                            <div class="mb-3">
-                                <%= form.label :public %>
-                                <%= form.check_box :public, class: "form-check-input" %>
-                            </div>
-                            <div class="mb-3">
-                                <%= form.label :archived %>
-                                <%= form.check_box :archived, class: "form-check-input" %>
-                            </div>
-
-                            <%= form.submit "Save", data: {turbo: false}, class: "btn btn-primary" %>
-                        <% end %>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<% if is_owner? @adventure %>
+    <%= render partial: "shared/edit_plan", locals: { form_model: @adventure, form_url: adventure_path(@campaign['slug'], @adventure['slug']), type: 'Adventure' } %>
 <% end %>
 
 <div class="container m-5">
     <h1><%= @adventure['title'] %></h1>
-    <p><a href="<%= "#{campaigns_path}/#{@campaign['slug']}" %>">Go to Campaign</a></p>
+    <p><a href="<%= campaign_path @campaign['slug'] %>">Go to Campaign</a></p>
     <h4><%= @adventure['subtitle'] %></h4>
     <p><%= @adventure['description'] %></p>
     <p>Dates: <%= @adventure['date_started'] %> - <%= @adventure['date_ended'] %></p>
 
-    <% if @is_owner %>
+    <% if is_owner? @adventure %>
         <h3 class="mt-5">Private Notes:</h3>
         <p><%= markdown @adventure['private_notes'] %></p>
     <% end %>

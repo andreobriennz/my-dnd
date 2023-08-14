@@ -2,11 +2,11 @@ module MonstersHelper
     def hash_to_html_list hash, keys
         keys
             .select { |key| hash[key] != nil && hash[key] != '' }
-            .map { |key| "<p>#{key.gsub('_', ' ').titleize }: #{hash[key]}</p>" }.join.html_safe
+            .map { |key| "<p>#{to_title key }: #{hash[key]}</p>" }.join.html_safe
     end
 
     def array_to_html_list array
-        array.map { |key, value| "<p>#{key.gsub('_', ' ').titleize }: #{value}</p>" }.join.html_safe
+        array.map { |key, value| "<p>#{to_title key }: #{value}</p>" }.join.html_safe
     end
 
     def array_to_html_links array
@@ -19,7 +19,7 @@ module MonstersHelper
         keys
             .map do |key|
                 """<p>
-                    #{key.gsub('_', ' ').titleize }: #{hash[key]} 
+                    #{to_title key}: #{hash[key]} 
                     (#{calculate_ability_modifier hash[key]})
                 </p>"""
             end.join.html_safe

@@ -1,4 +1,4 @@
-<% if @saved_monsters.length > 0 %>
+<% if @saved_monsters.any? %>
     <div class="container my-5">
         <h1>Saved Monsters</h1>
         <table class="table">
@@ -16,7 +16,7 @@
             <tbody>
                 <% for monster in @saved_monsters %>
                     <tr>
-                        <th scope="row"><a href="<%= monsters_path %>/<%= monster['slug'] %>"><%= monster['name'] %></a></th>
+                        <th scope="row"><a href="<%= to_url monsters_path, monster['slug'] %>"><%= monster['name'] %></a></th>
                         <td><%= monster['type'] %></td>
                         <td><%= monster['group'] %></td>
                         <td><%= monster['challenge_rating'] %></td>
@@ -67,7 +67,7 @@
         <tbody>
             <% for monster in @all_monsters %>
                 <tr>
-                    <th scope="row"><a href="<%= monsters_path %>/<%= monster['slug'] %>"><%= monster['name'] %></a></th>
+                    <th scope="row"><a href="<%= to_url monsters_path, monster['slug'] %>"><%= monster['name'] %></a></th>
                     <td><%= monster['type'] %></td>
                     <td><%= monster['group'] %></td>
                     <td><%= monster['challenge_rating'] %></td>
@@ -86,10 +86,10 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <% if @previous %>
-                    <li class="page-item"><a class="page-link" href="<%= @previous.split('/').last %>">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="<%= get_slug @previous %>">Previous</a></li>
                 <% end %>
                 <% if @next %>
-                    <li class="page-item"><a class="page-link" href="<%= @next.split('/').last %>">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="<%= get_slug @next %>">Next</a></li>
                 <% end %>
             </ul>
         </nav>
