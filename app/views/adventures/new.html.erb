@@ -1,26 +1,21 @@
-<div class="container my-5">
-    <h1>Create New Adventure</h1>
+<div class="container mt-8 shallow-stack-sm">
+    <h1 class="heading-mega">Create New Adventure</h1>
+    <h2>Create a new adventure for <%= @campaign['title'] %></h2>
 
-    <p>Create an adventure for <%= @campaign['title'] %></p>
-</div>
-
-<div class="container mb-5">
-    <div class="w-50">
-        <%= form_with model: @adventure, url: "/campaigns/#{@campaign['slug']}/adventures/create", local: true do |form| %>
-            <% if @adventure.errors.any? %>
-                <div class="alert alert-danger">
-                    <% @adventure.errors.full_messages do |message| %>
-                        <div><%= message %></div>
-                    <% end %>
-                </div>
-            <% end %>
-
-            <div class="mb-3">
-                <%= form.label :title %>
-                <%= form.text_field :title, class: "form-control", placeholder: "Our Adventure" %>
+    <%= form_with model: @adventure, url: "/campaigns/#{@campaign['slug']}/adventures/create", class: "form container-small", local: true do |form| %>
+        <% if @adventure.errors.any? %>
+            <div class="alert alert-danger">
+                <% @adventure.errors.full_messages do |message| %>
+                    <div><%= message %></div>
+                <% end %>
             </div>
-
-            <%= form.submit "Create", data: {turbo: false}, class: "btn btn-primary" %>
         <% end %>
-    </div>
+
+        <div class="form-item">
+            <%= form.label :title %>
+            <%= form.text_field :title, class: "input", placeholder: "Our Adventure" %>
+        </div>
+
+        <%= form.submit "Create", data: {turbo: false}, class: "button button-primary" %>
+    <% end %>
 </div>

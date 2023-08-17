@@ -1,18 +1,23 @@
-<% if @my_spells.any? %>
-    <div class="container my-5">
-        <h2>My Spells</h2>
-    </div>
+<div class="container mt-8 stack-sm">
+    <h1 class="heading-mega">Magic Items</h1>
+</div>
 
-    <div class="container my-5">
+<% if @my_spells.any? %>
+    <section class="container mt-8 mb-12 shallow-stack-sm">
+        <h2 class="heading-large">My Spells</h2>
         <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Save</th>
+                </tr>
+            </thead>
             <tbody>
                 <% @my_spells.each do |slug| %>
                     <tr>
                         <td>
-                            <a class="btn btn-link" href="<%= to_url spells_path, slug %>">
-                                <strong>
-                                    <%= to_title slug %>
-                                </strong>
+                            <a href="<%= to_url spells_path, slug %>">
+                                <strong><%= to_title slug %></strong>
                             </a>
                         </td>
                         <td>
@@ -22,21 +27,23 @@
                 <% end %>
             </tbody>
         </table>
-    </div>
+    </section>
 <% end %>
 
-
-<div class="container my-5">
-    <h2>All Spells</h2>
-</div>
-
-<div class="container my-5">
+<section class="container mt-8 mb-12 shallow-stack-sm">
+    <h2 class="heading-large">All Spells</h2>
     <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Save</th>
+            </tr>
+        </thead>
         <tbody>
             <% @all_spells.each do |slug| %>
                 <tr>
                     <td>
-                        <a class="btn btn-link" href="<%= to_url spells_path, slug %>">
+                        <a href="<%= to_url spells_path, slug %>">
                             <strong><%= to_title slug %></strong>
                         </a>
                     </td>
@@ -47,4 +54,4 @@
             <% end %>
         </tbody>
     </table>
-</div>
+</section>

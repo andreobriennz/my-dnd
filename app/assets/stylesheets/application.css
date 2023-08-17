@@ -13,3 +13,38 @@
  *= require_tree .
  *= require_self
  */
+
+/* stack */
+.stack-xs * + * {
+    margin-top: .25em;
+}
+
+.stack-sm * + * {
+    margin-top: .75em;
+}
+
+.stack-lg * + * {
+    margin-top: 1.5em;
+}
+
+/* 1 level deep */
+.shallow-stack-sm > * {
+    margin-top: .75em;
+}
+
+.shallow-stack-lg > * {
+    margin-top: 1.5em;
+}
+
+/* markdown */
+.markdown h1 {
+    font-size: 28px;
+}
+
+.markdown h2 {
+    font-size: 22px;
+}
+
+.markdown h3 {
+    font-size: 18px;
+}

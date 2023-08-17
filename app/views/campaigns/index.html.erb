@@ -1,5 +1,5 @@
-<div class="container m-5">
-    <h1 class="mb-4">My Campaigns</h1>
+<div class="container mt-8 stack-sm">
+    <h1 class="heading-mega">My Campaigns</h1>
 
     <% for campaign in @campaigns %>
         <div class="mb-4">
@@ -10,7 +10,7 @@
     <% end %>
 
     <% if is_logged_in? %>
-        <%= link_to "Add Campaign", campaigns_create_path, class: "btn btn-primary"  %>
+        <%= link_to "Add Campaign", campaigns_create_path, class: "button button-primary"  %>
     <% else %>
         <%= link_to "Log in", sign_in_path %> or <%= link_to "sign up", sign_up_path %> to create campaigns.
     <% end %>

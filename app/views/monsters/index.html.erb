@@ -1,22 +1,30 @@
+<div class="container mt-8 stack-sm">
+    <h1 class="heading-mega">Monsters</h1>
+</div>
+
 <% if @saved_monsters.any? %>
-    <div class="container my-5">
-        <h1>Saved Monsters</h1>
+    <div class="container mt-8 mb-12 shallow-stack-sm">
+        <h1 class="heading-large">Saved Monsters</h1>
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Group</th>
-                    <th scope="col">Challenge Rating</th>
-                    <th scope="col">Size</th>
-                    <th scope="col">Alignment</th>
-                    <th scope="col">Save</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Group</th>
+                    <th>Challenge Rating</th>
+                    <th>Size</th>
+                    <th>Alignment</th>
+                    <th>Save</th>
                 </tr>
             </thead>
             <tbody>
                 <% for monster in @saved_monsters %>
                     <tr>
-                        <th scope="row"><a href="<%= to_url monsters_path, monster['slug'] %>"><%= monster['name'] %></a></th>
+                        <td scope="row">
+                            <a href="<%= to_url monsters_path, monster['slug'] %>">
+                                <strong><%= monster['name'] %></strong>
+                            </a>
+                        </td>
                         <td><%= monster['type'] %></td>
                         <td><%= monster['group'] %></td>
                         <td><%= monster['challenge_rating'] %></td>
@@ -31,43 +39,48 @@
 <% end %>
 
 
-<div class="container my-5">
-    <h1>All Monsters</h1>
+<div class="container mt-8 mb-12 shallow-stack-sm">
+    <h2 class="heading-large">Search All Monsters</h2>
 
-        <form action="/monsters/" method="GET" class="w-50 mb-3">
-        <div class="mb-2">
-            <label for="search" class="form-label">Search Items</label>
-            <input type="text" name="search" value="<%=params[:search]%>" placeholder="Search..." class="form-control" aria-label="Search magic items">
+        <form action="/monsters/" method="GET" class="form container-small">
+        <div class="form-item">
+            <label for="search">Search Items</label>
+            <input class="input" type="text" name="search" value="<%=params[:search]%>" placeholder="Search..." class="form-control" aria-label="Search magic items">
         </div>
 
-        <div class="mb-2">
-            <label for="cr__gte" class="form-label">Min Challenge Rating</label>
-            <input type="number" name="cr__gte" value="<%=params[:cr__gte]%>" placeholder="0" step=".01" class="form-control" aria-label="Min challenge rating">
-
-            <label for="cr__lte" class="form-label">Max Challenge Rating</label>
-            <input type="number" name="cr__lte" value="<%=params[:cr__lte]%>" placeholder="0" step=".01" class="form-control" aria-label="Max challenge rating">
+        <div class="form-item">
+            <label for="cr__gte">Min Challenge Rating</label>
+            <input class="input" type="number" name="cr__gte" value="<%=params[:cr__gte]%>" placeholder="0" step=".01" class="form-control" aria-label="Min challenge rating">
+        </div>
+        <div class="form-item">
+            <label for="cr__lte">Max Challenge Rating</label>
+            <input class="input" type="number" name="cr__lte" value="<%=params[:cr__lte]%>" placeholder="0" step=".01" class="form-control" aria-label="Max challenge rating">
         </div>
 
-        <input type="submit" value="Search" class="btn btn-primary">
-        <%= link_to "Clear Filters", monsters_path, class: "btn btn-link" %>
+        <input type="submit" value="Search" class="button button-primary button-small mr-2">
+        <%= link_to "Clear Filters", monsters_path %>
     </form>
 
-    <table class="table mt-4">
+    <table class="table">
         <thead>
             <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Type</th>
-                <th scope="col">Group</th>
-                <th scope="col">Challenge Rating</th>
-                <th scope="col">Size</th>
-                <th scope="col">Alignment</th>
-                <th scope="col">Save</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Group</th>
+                <th>Challenge Rating</th>
+                <th>Size</th>
+                <th>Alignment</th>
+                <th>Save</th>
             </tr>
         </thead>
         <tbody>
             <% for monster in @all_monsters %>
                 <tr>
-                    <th scope="row"><a href="<%= to_url monsters_path, monster['slug'] %>"><%= monster['name'] %></a></th>
+                    <td scope="row">
+                        <a href="<%= to_url monsters_path, monster['slug'] %>">
+                            <strong><%= monster['name'] %></strong>
+                        </a>
+                    </td>
                     <td><%= monster['type'] %></td>
                     <td><%= monster['group'] %></td>
                     <td><%= monster['challenge_rating'] %></td>
@@ -83,15 +96,14 @@
 <%# todo: refactor to helper %>
 <% if @previous || @next %>
     <div class="container my-5">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
+        <nav aria-label="Pagination navigation">
                 <% if @previous %>
-                    <li class="page-item"><a class="page-link" href="<%= get_slug @previous %>">Previous</a></li>
+                    <a class="button button-secondary button-small" href="<%= get_slug @previous %>">Previous</a>
                 <% end %>
                 <% if @next %>
-                    <li class="page-item"><a class="page-link" href="<%= get_slug @next %>">Next</a></li>
+                    <a class="button button-secondary button-small" href="<%= get_slug @next %>">Next</a>
                 <% end %>
-            </ul>
         </nav>
     </div>
 <% end %>
+

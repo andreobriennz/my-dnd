@@ -1,48 +1,43 @@
-<div class="container my-5">
-    <h1><%= @monster['name'] %></h1>
+<div class="container mt-8 stack-sm">
+    <h1 class="heading-mega"><%= @monster['name'] %></h1>
 
     <% if @monster['desc'] != '' %>
         <div class="my-5">
-            <h2>Description:</h2>
+            <h2 class="heading-large">Description:</h2>
             <p><%= @monster['desc'] %></p>
         </div>
     <% end %>
 
     <div class="my-5">
-        <h2>Stats</h2>
-        <p><strong>
+        <h2 class="heading-large">Stats</h2>
+        <p>
             Armor Class: <%= @monster['armor_class'] %>
             <% if @monster['armor_desc'] != '' %>(<%= @monster['armor_desc'].titleize %>)<% end %>
-        </strong></p>
-
-        <p><strong>Hit Points: <%= @monster['hit_points'] %></strong></p>
-
-        <p><strong>Hit Dice: <%= @monster['hit_dice'] %></strong></p>
-
-        <p><strong>Speed: <%= @monster['speed']['walk'] %></strong></p>
-
-        <p><strong>Typical alignment: <%= @monster['alignment'].titleize %></strong></p>
-
-        <p><strong>Challenge Rating: <%= @monster['challenge_rating'] %></strong></p>
+        </p>
+        <p>Hit Points: <%= @monster['hit_points'] %></p>
+        <p>Hit Dice: <%= @monster['hit_dice'] %></p>
+        <p>Speed: <%= @monster['speed']['walk'] %></p>
+        <p>Typical alignment: <%= @monster['alignment'].titleize %></p>
+        <p>Challenge Rating: <%= @monster['challenge_rating'] %></p>
     </div>
 
     <div class="my-5">
-        <h2>Abilities</h2>
+        <h2 class="heading-large">Abilities</h2>
         <%= get_ability_modifiers @monster %>
     </div>
 
     <div class="my-5">
-        <h2>Saving Throws</h2>
+        <h2 class="heading-large">Saving Throws</h2>
         <%= hash_to_html_list @monster, ['strength_save', 'dexterity_save', 'constitution_save', 'intelligence_save', 'wisdom_save', 'charisma_save'] %>
     </div>
 
     <div class="my-5">
-        <h2>Skills</h2>
+        <h2 class="heading-large">Skills</h2>
         <%= array_to_html_list @monster['skills'] %>
     </div>
 
     <div class="my-5">
-        <h2>Actions</h2>
+        <h2 class="heading-large">Actions</h2>
         <% for action in @monster['actions'] %>
             <p><strong><%= action['name'] %>:</strong> <%= action['desc'] %></p>
             <% if action['attack_bonus'] || action['damage_dice'] || action['damage_bonus'] %>
@@ -55,7 +50,7 @@
 
     <% if @monster['spell_list'].any? %>
         <div class="my-5">
-            <h2>Spells</h2>
+            <h2 class="heading-large">Spells</h2>
             <%= array_to_html_links @monster['spell_list'] %>
         </div>
     <% end %>

@@ -1,14 +1,18 @@
-<h1>Sign In</h1>
+<div class="container-small mt-8 shallow-stack-sm">
+    <h1 class="heading-mega">Sign In</h1>
 
-<%= form_with url: sign_in_path do |form| %>
-    <div class="mb-2">
-        <%= form.label :username %>
-        <%= form.text_field :username, class: "form-control", placeholder: "user123" %>
-    </div>
-    <div class="mb-2">
-        <%= form.label :password %>
-        <%= form.password_field :password, class: "form-control" %>
-    </div>
+    <%= form_with url: sign_in_path, class: "form" do |form| %>
+        <div class="form-item">
+            <%= form.label :username %>
+            <%= form.text_field :username, class: "input", placeholder: "user123" %>
+        </div>
+        <div class="form-item">
+            <%= form.label :password %>
+            <%= form.password_field :password, class: "input" %>
+        </div>
 
-    <%= form.submit "Get Started", data: {turbo: false}, class: "btn btn-primary" %>
-<% end %>
+        <%= form.submit "Get Started", data: {turbo: false}, class: "button button-primary" %>
+    <% end %>
+
+    <p>Don't have an account? <%= link_to "Sign up", sign_up_path %></p>
+</div>

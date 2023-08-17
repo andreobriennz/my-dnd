@@ -1,8 +1,8 @@
-<div class="container my-5">
-    <h1><%= @spell['name'] %></h1>
+<div class="container-content mt-8 stack-sm">
+    <h1 class="heading-mega"><%= @spell['name'] %></h1>
 
     <p><strong>Description</strong></p>
-    <p><%= @spell['desc'] %></p>
+    <p><%= markdown @spell['desc'] %></p>
 
     <p><strong>Higher Levels:</strong></p>
     <p><%= @spell['higher_level'] %></p>

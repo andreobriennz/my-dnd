@@ -1,10 +1,8 @@
-<div class="container my-5">
-    <h1>Create New Campaign</h1>
-</div>
+<div class="container mt-8 shallow-stack-sm">
+    <h1 class="heading-mega">Create New Campaign</h1>
 
-<div class="container mb-5">
-    <div class="w-50">
-        <%= form_with model: @campaign, url: campaigns_create_path, local: true do |form| %>
+    <div class="container-small">
+        <%= form_with model: @campaign, url: campaigns_create_path, class: "form", local: true do |form| %>
             <% if @campaign.errors.any? %>
                 <div class="alert alert-danger">
                     <% @campaign.errors.full_messages do |message| %>
@@ -13,12 +11,12 @@
                 </div>
             <% end %>
 
-            <div class="mb-3">
+            <div class="form-item">
                 <%= form.label :title %>
-                <%= form.text_field :title, class: "form-control", placeholder: "My Campaign" %>
+                <%= form.text_field :title, class: "input", placeholder: "My Campaign" %>
             </div>
             
-            <%= form.submit "Create", data: {turbo: false}, class: "btn btn-primary" %>
+            <%= form.submit "Create", data: {turbo: false}, class: "button button-primary" %>
         <% end %>
     </div>
 </div>
