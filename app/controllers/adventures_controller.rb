@@ -51,7 +51,7 @@ class AdventuresController < ApplicationController
         campaign = Campaign.find_by(:slug => params['campaign_slug'])
         adventure = Adventure.find_by(:slug => params['adventure_slug'])
         
-        if adventure && has_permission? adventure, must_be_owner
+        if campaign && has_permission?(campaign, must_be_owner)
             return campaign
         elsif adventure
             render html: 'Adventure is not public'

@@ -55,7 +55,7 @@ class CampaignsController < ApplicationController
 
     def get_campaign(must_be_owner=true)
         campaign = Campaign.find_by(:slug => params['campaign_slug'])
-        if campaign && has_permission? campaign, must_be_owner
+        if campaign && has_permission?(campaign, must_be_owner)
             return campaign
         elsif campaign
             render html: 'Campaign is not public'
