@@ -1,7 +1,6 @@
 class Campaign < ApplicationRecord
     belongs_to :user
     has_many :adventures
-    # has_many :comment, dependent: :destroy
     has_many :comments, as: :commentable, dependent: :destroy
     
     before_create :set_defaults

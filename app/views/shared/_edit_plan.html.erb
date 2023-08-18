@@ -4,7 +4,7 @@
         Edit <%= type %>
     </h2>
     
-    <%= form_with model: form_model, url: form_url, class: "container-content", local: true, method: :put do |form| %>
+    <%= form_with model: form_model, url: form_url, class: "container-content", local: true, method: :put do |form| %>        
         <div class="form-item">
             <%= form.label :title %>
             <%= form.text_field :title, class: "input" %>

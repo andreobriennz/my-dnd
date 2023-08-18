@@ -2,6 +2,14 @@
     <h1 class="heading-mega">Sign In</h1>
 
     <%= form_with url: sign_in_path, class: "form" do |form| %>
+        <% if @user.errors.any? %>
+            <div class="alert alert-error my-2">
+                <% @user.errors.full_messages.each do |message| %>
+                    <div><%= message %></div>
+                <% end %>
+            </div>
+        <% end %>
+
         <div class="form-item">
             <%= form.label :username %>
             <%= form.text_field :username, class: "input", placeholder: "user123" %>

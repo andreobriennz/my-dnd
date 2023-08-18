@@ -19,11 +19,11 @@ class AdventuresController < ApplicationController
         if @adventure.save
             redirect_to "/campaigns/#{@campaign['slug']}/adventures/#{@adventure['slug']}", notice: "New Adventure Created"
         else
-            render json: @adventure.errors
+            render :new
         end
     end
 
-    def edit
+    def update
         campaign = get_campaign
         return nil if !campaign
 

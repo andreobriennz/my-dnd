@@ -17,15 +17,15 @@ class CampaignsController < ApplicationController
     end
 
     def create
-        campaign = Current.user.campaigns.create allowed_params
-        if campaign.save
-            redirect_to "#{campaigns_path}/#{campaign.slug}", notice: "New Campaign Created"
+        @campaign = Current.user.campaigns.create allowed_params
+        if @campaign.save
+            redirect_to "#{campaigns_path}/#{@campaign.slug}", notice: "New Campaign Created"
         else
             render :new
         end
     end
 
-    def edit
+    def update
         campaign = get_campaign 
         return nil if campaign == nil
 

@@ -4,8 +4,8 @@
     <div class="container-small">
         <%= form_with model: @campaign, url: campaigns_create_path, class: "form", local: true do |form| %>
             <% if @campaign.errors.any? %>
-                <div class="alert alert-danger">
-                    <% @campaign.errors.full_messages do |message| %>
+                <div class="alert alert-error my-2">
+                    <% @campaign.errors.full_messages.each do |message| %>
                         <div><%= message %></div>
                     <% end %>
                 </div>

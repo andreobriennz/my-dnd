@@ -9,7 +9,7 @@ class RegistrationsController < ApplicationController
             session[:user_id] = @user.id
             redirect_to root_path, notice: "New Account Created"
         else
-            render :new # , status: :unprocessable_entity
+            render :new
         end
     end
 

@@ -24,14 +24,14 @@ Rails.application.routes.draw do
     get "campaigns/:campaign_slug/adventures/create", to: "adventures#new"
     post "campaigns/:campaign_slug/adventures/create", to: "adventures#create"
     get "campaigns/:campaign_slug/adventures/:adventure_slug", to: "adventures#show"
-    put "campaigns/:campaign_slug/adventures/:adventure_slug", to: "adventures#edit"
+    put "campaigns/:campaign_slug/adventures/:adventure_slug", to: "adventures#update"
 
     # campaigns
     get "campaigns", to: "campaigns#index"
     get "campaigns/create", to: "campaigns#new"
     post "campaigns/create", to: "campaigns#create"
     get "campaigns/:campaign_slug", to: "campaigns#show"
-    put "campaigns/:campaign_slug", to: "campaigns#edit"
+    put "campaigns/:campaign_slug", to: "campaigns#update"
 
     # comments
     resources :campaigns do

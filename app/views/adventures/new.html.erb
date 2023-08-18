@@ -4,8 +4,8 @@
 
     <%= form_with model: @adventure, url: "/campaigns/#{@campaign['slug']}/adventures/create", class: "form container-small", local: true do |form| %>
         <% if @adventure.errors.any? %>
-            <div class="alert alert-danger">
-                <% @adventure.errors.full_messages do |message| %>
+            <div class="alert alert-error my-2">
+                <% @adventure.errors.full_messages.each do |message| %>
                     <div><%= message %></div>
                 <% end %>
             </div>
