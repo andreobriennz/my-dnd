@@ -4,10 +4,12 @@
             <h1 class="heading-mega"><%= @adventure['title'] %></h1>
             <p><a href="<%= campaign_path @campaign['slug'] %>">Go to Campaign (<%=@campaign['title']%>)</a></p>
             <h2 class="heading-medium"><%= @adventure['subtitle'] %></h2>
-            <p>Dates: <%= @adventure['date_started'] %> - <%= @adventure['date_ended'] %></p>
+            <p>Dates: <%= @adventure['date_started'] %></p>
 
-            <h2 class="heading-medium">Description</h2>
-            <div class="stack-xs markdown"><%= markdown @adventure['description'] %></div>
+            <div class="card">
+                <h3 class="h6">Description</h3>
+                <div class="stack-xs markdown"><%= markdown @adventure['description'] %></div>
+            </div>
 
             <h2 class="heading-medium">Shared Notes</h2>
             <div class="stack-xs markdown"><%= markdown @adventure['shared_notes'] %></div>
@@ -43,7 +45,11 @@
                 <strong><%= comment.user.username %></strong>
                 <p class="mb-0"><small style="font-size: 12px; color: #777; padding-top: 0;"><%= comment.created_at.to_formatted_s(:short) %> UTC</small></p>
                 <div class="stack-xs markdown">
-                    <%= markdown comment.text %>
+                    <% if comment.is_csv %>
+                        <%= render partial: "shared/csv", locals: { table: comment.text } %>
+                    <% else %>
+                        <%= markdown comment.text %>
+                    <% end %>
                 </div>
             </div>
         <% end %>
@@ -54,8 +60,12 @@
                 <div class="form-item">
                     <%= form.label :text, "Add comment (markdown supported)" %>
                     <%= form.text_area :text, placeholder: "Add a comment...", class: "input" %>
-                    <%= form.hidden_field :adventure_id, value: @adventure.id %>
                 </div>
+                <div class="form-item">
+                    <%= form.label :is_csv, "Display as table (must be in CSV format)" %>
+                    <%= form.check_box :is_csv, class: "input", rows: 3 %>
+                </div>
+                <%= form.hidden_field :adventure_id, value: @adventure.id %>
                 <%= form.submit "Add Comment", class: "button button-primary button-small" %>
             <% end %>
         <% end %>

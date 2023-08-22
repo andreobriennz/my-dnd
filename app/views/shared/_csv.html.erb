@@ -1,0 +1,25 @@
+here
+
+<%# TODO: quick solution only - move logic out of view %>
+
+<%
+rows = table.split("\n")
+headings = rows[0].split(',')
+data_rows = rows.drop(1)
+
+%>
+
+<table>
+    <tr>
+        <% for heading in headings %>
+            <th><strong><%= heading %></strong></th>
+        <% end %>
+    </tr>
+    <% for row in data_rows %>
+        <tr>
+            <% for column in row.split(',') %>
+                <td><%= column %></td>
+            <% end %>
+        </tr>
+    <% end %>
+</table>

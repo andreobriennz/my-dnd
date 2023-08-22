@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
     private
 
     def comment_params
-        params.require(:comment).permit(:text, :commentable_type, :commentable_id, :adventure_id, :campaign_id)
+        params.require(:comment).permit(:text, :commentable_type, :commentable_id, :adventure_id, :campaign_id, :is_csv)
     end
 
     def find_commentable
