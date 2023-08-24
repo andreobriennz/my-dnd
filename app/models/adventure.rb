@@ -1,5 +1,6 @@
 class Adventure < ApplicationRecord
     belongs_to :user
+    belongs_to :campaign
     # has_many :comment, dependent: :destroy
     has_many :comments, as: :commentable, dependent: :destroy
 

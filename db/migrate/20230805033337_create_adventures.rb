@@ -15,7 +15,6 @@ class CreateAdventures < ActiveRecord::Migration[7.0]
 
       t.string :slug
       t.string :campaign_slug
-      t.string :user_id
 
       t.timestamps
     end

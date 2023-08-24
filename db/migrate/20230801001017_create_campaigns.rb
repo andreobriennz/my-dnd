@@ -15,7 +15,6 @@ class CreateCampaigns < ActiveRecord::Migration[7.0]
       t.date :date_ended
 
       t.string :slug
-      t.string :user_id
 
       t.timestamps
     end

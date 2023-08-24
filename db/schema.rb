@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_013118) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_13_225516) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,7 +25,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_013118) do
     t.date "date_started"
     t.string "slug"
     t.string "campaign_slug"
-    t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "campaign_id", null: false
@@ -51,14 +50,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_013118) do
 
   create_table "comments", force: :cascade do |t|
     t.text "text"
+    t.boolean "is_csv"
     t.bigint "adventure_id"
     t.bigint "campaign_id"
     t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "commentable_type", null: false
     t.bigint "commentable_id", null: false
-    t.boolean "is_csv"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["adventure_id"], name: "index_comments_on_adventure_id"
     t.index ["campaign_id"], name: "index_comments_on_campaign_id"
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
