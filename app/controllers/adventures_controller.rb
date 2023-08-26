@@ -14,8 +14,7 @@ class AdventuresController < ApplicationController
         @campaign = get_campaign
         return nil if @campaign == nil
 
-        adventure_params = { **allowed_params, user_id: Current.user.id }
-        @adventure = @campaign.adventures.create adventure_params
+        @adventure = @campaign.adventures.build allowed_params
         if @adventure.save
             redirect_to "/campaigns/#{@campaign['slug']}/adventures/#{@adventure['slug']}", notice: "New Adventure Created"
         else
@@ -42,16 +41,16 @@ class AdventuresController < ApplicationController
         Current.user ? item.user_id.to_i == Current.user.id.to_i : false
     end
 
-    def has_permission? item, must_be_owner=true
-        is_owner = is_owner? item
-        is_owner || (item&.public && must_be_owner == false)
+    def has_permission? campaign, adventure, must_be_owner=true
+        is_owner = is_owner? campaign
+        is_owner || (adventure&.public && must_be_owner == false)
     end
 
     def get_campaign(must_be_owner=true)
         campaign = Campaign.find_by(:slug => params['campaign_slug'])
         adventure = Adventure.find_by(:slug => params['adventure_slug'])
         
-        if campaign && has_permission?(campaign, must_be_owner)
+        if campaign && has_permission?(campaign, adventure, must_be_owner)
             return campaign
         elsif adventure
             render html: 'Adventure is not public'
