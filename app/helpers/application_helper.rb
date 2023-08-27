@@ -2,7 +2,7 @@ module ApplicationHelper
     def markdown(text)
         return if text == nil || text == ''
         
-        options = [:hard_wrap, :autolink, :no_intra_emphasis]
+        options = [:hard_wrap, :autolink, :no_intra_emphasis, :tables, :underline, :highlight, :quote, :footnotes]
         Markdown.new(text, *options).to_html.html_safe
     end
 
