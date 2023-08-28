@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
         @comment = @commentable.comments.build(comment_params)
         @comment.user = Current.user
 
-        if @comment.save
+        if has_permission?(@commentable) && @comment.save
             flash[:notice] = 'Comment added'
             redirect_back(fallback_location: '/')
         else
@@ -38,5 +38,10 @@ class CommentsController < ApplicationController
         else
           root_path
         end
+    end
+
+    def has_permission? item
+        is_owner =  Current.user ? Current.user.id.to_i == item.user_id.to_i : false
+        is_owner || item&.public
     end
 end
