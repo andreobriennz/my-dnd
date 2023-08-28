@@ -26,14 +26,14 @@ class CampaignsController < ApplicationController
     end
 
     def update
-        campaign = get_campaign 
-        return nil if campaign == nil
+        @campaign = get_campaign 
+        return nil if @campaign == nil
 
-        campaign.attributes = allowed_params
-        if campaign.save
-            redirect_to "#{campaigns_path}/#{campaign.slug}", notice: "Campaign Updated"
+        @campaign.attributes = allowed_params
+        if @campaign.save
+            redirect_to "#{campaigns_path}/#{@campaign.slug}", notice: "Campaign Updated"
         else
-            redirect_to "#{campaigns_path}/#{campaign.slug}", notice: "Failed to Save"
+            redirect_to "#{campaigns_path}/#{@campaign.slug}", notice: "Failed to Save"
         end
     end
 
