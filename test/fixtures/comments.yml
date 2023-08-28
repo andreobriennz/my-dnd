@@ -1,15 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-two:
-  text: My Comment
-  user: one
-  is_csv: false
-  commentable_type: Campaign
-  commentable_id: 1
+# one:
+#   text: My Comment
+#   user: one
+#   is_csv: false
+#   commentable_type: Campaign
+#   commentable_id: 1
 
-two:
-  text: My Comment
-  user: two
-  is_csv: true
-  commentable_type: Adventure
-  commentable_id: 2
+# two:
+#   text: My Comment
+#   user: two
+#   is_csv: true
+#   commentable_type: Adventure
+#   commentable_id: 2

@@ -1,9 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: Adventure Title 1
-  campaign: one
+# one:
+#   title: Adventure Title 1
+#   campaign: one
 
-one:
-  title: Adventure Title 1
-  campaign: two
+# one:
+#   title: Adventure Title 1
+#   campaign: two

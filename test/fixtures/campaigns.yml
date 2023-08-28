@@ -1,9 +1,18 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: Campaign Title 1
-  user: one
+# one:
+#   title: Campaign Title 1
+#   user: one
+  # date_started: 
+  # date_ended: 
 
-two:
-  title: Campaign Title 2
-  user: two
+
+# two:
+#   title: Campaign Title 2
+#   user: one
+#   subtitle: Subtitle 1
+#   description: A short desc of the campaign
+#   public: true # <-
+#   shared_notes: Some text which should be visible to everyone
+#   private_notes: Some text which should only be visible # <-
+#   slug: xxx111
