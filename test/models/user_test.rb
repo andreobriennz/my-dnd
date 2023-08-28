@@ -51,10 +51,24 @@ class UserTest < ActiveSupport::TestCase
         assert_not user.authenticate("wrong_password"), "User logged in with wrong password"
     end
 
-    # todo:
-    # validate email format
-    # test deleting user deletes campaigns
-    # test password reset
-    # test log in for user
-    # test doesn't log in if password incorrect
+    test "deleting user also deletes campaigns" do
+        user = User.new(username: "testuser2", email: "test2@example.com", password: "password")
+        user.save
+        campaign = user.campaigns.create({title: 'Some campaign title'})
+
+        assert Campaign.where(:user_id => user[:id]).count >= 0, "No campaigns to test"
+        user.destroy
+        assert Campaign.where(:user_id => user[:id]).count == 0, "Failed to delete campaigns"
+    end
+
+    test "deleting user also deletes adventures" do
+        user = User.new(username: "testuser2", email: "test2@example.com", password: "password")
+        user.save
+        campaign = user.campaigns.create({title: 'Some campaign title'})
+        adventure = campaign.adventures.build({title: 'Some adventure title'})
+        
+        assert Adventure.where(:campaign_id => campaign[:id]).count >= 0, "No adventures to test"
+        user.destroy
+        assert Adventure.where(:campaign_id => campaign[:id]).count == 0, "Failed to delete adventures"
+    end
 end
