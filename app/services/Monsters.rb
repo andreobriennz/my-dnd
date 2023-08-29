@@ -20,7 +20,7 @@ class Monsters
         JSON.parse(response)
     end
 
-    def get_my_items # all_items
+    def get_my_items
         return [] if !Current.user
 
         saved_items = Current.user.saved_monsters
