@@ -1,30 +1,29 @@
 class MagicItems
     def initialize(params)
         @params = params
+        @query = params
+            .permit(:search, :rarity, :page)
+            .to_query
     end
 
     def get_magic_items
-        url = 'https://api.open5e.com/v1/magicitems/'
-        search = @params[:search]
-        rarity = @params[:rarity]
-        if search
-            url = url+'?search='+search      
-        end
-        
+        url = 'https://api.open5e.com/v1/magicitems/?'+@query
         response = RestClient.get(url)
-        all_items = JSON.parse(response)['results']
-    
-        if rarity && rarity != ''
-            all_items = all_items.select { |item| item['rarity'].downcase == rarity }
-        end
-
-        all_items
+        JSON.parse(response)
     end
 
-    def get_my_items all_items
+    def get_magic_item slug
+        url = "https://api.open5e.com/v1/magicitems/?slug__in=#{slug}"
+        response = RestClient.get(url)
+        all_items = JSON.parse(response)['results'].first
+    end
+
+    def get_my_items # all_items
         return [] if !Current.user
 
         saved_items = Current.user.saved_magic_items
-        all_items.select { |item| saved_items.include? item['slug'] } 
+        url = "https://api.open5e.com/v1/magicitems/?slug__in=#{saved_items.join(',')}"
+        response = RestClient.get(url)
+        all_items = JSON.parse(response)['results']
     end
 end

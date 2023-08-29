@@ -12,7 +12,7 @@
         <h2 class="heading-large">Stats</h2>
         <p>
             Armor Class: <%= @monster['armor_class'] %>
-            <% if @monster['armor_desc'] != '' %>(<%= @monster['armor_desc'].titleize %>)<% end %>
+            <% if @monster['armor_desc'] != nil && @monster['armor_desc'] != '' %>(<%= @monster['armor_desc'].titleize %>)<% end %>
         </p>
         <p>Hit Points: <%= @monster['hit_points'] %></p>
         <p>Hit Dice: <%= @monster['hit_dice'] %></p>

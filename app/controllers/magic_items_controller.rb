@@ -1,13 +1,16 @@
 class MagicItemsController < ApplicationController
     def index
         magic_items_object = MagicItems.new params
-        @all_items = magic_items_object.get_magic_items
-        @my_items = magic_items_object.get_my_items @all_items
+
+        response = magic_items_object.get_magic_items
+        @all_items = response['results']
+        @previous, @next = response['previous'], response['next']
+
+        @my_items = magic_items_object.get_my_items
     end 
 
-    def index_json
+    def show
         magic_items_object = MagicItems.new params
-        @items = magic_items_object.get_magic_items
-        render json: @items
+        @item = magic_items_object.get_magic_item params['slug']
     end
 end

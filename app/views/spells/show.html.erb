@@ -24,4 +24,8 @@
     </strong></p>
 
     <p><strong>Page: <%= @spell['page'] != '' ? @spell['page'] : '-' %></strong></p>
+
+    <div class="my-5">
+        <%= save_spell_button @spell['slug'] %>
+    </div>
 </div>

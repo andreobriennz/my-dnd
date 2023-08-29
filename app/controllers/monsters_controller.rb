@@ -4,7 +4,7 @@ class MonstersController < ApplicationController
         response = monsters_object.get_monsters
         @all_monsters = response['results']
         @previous, @next = response['previous'], response['next']
-        @saved_monsters = monsters_object.get_my_items @all_monsters
+        @saved_monsters = monsters_object.get_my_items
     end
 
     def show

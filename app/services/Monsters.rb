@@ -20,10 +20,12 @@ class Monsters
         JSON.parse(response)
     end
 
-    def get_my_items all_items
+    def get_my_items # all_items
         return [] if !Current.user
 
         saved_items = Current.user.saved_monsters
-        all_items.select { |item| saved_items.include? item['slug'] }
+        url = "https://api.open5e.com/v1/monsters/?slug__in=#{saved_items.join(',')}"
+        response = RestClient.get(url)
+        all_items = JSON.parse(response)['results']
     end
 end
