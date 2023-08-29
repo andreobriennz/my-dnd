@@ -24,6 +24,8 @@ class Monsters
         return [] if !Current.user
 
         saved_items = Current.user.saved_monsters
+        return [] if Current.user.saved_monsters.length == 0
+
         url = "https://api.open5e.com/v1/monsters/?slug__in=#{saved_items.join(',')}"
         response = RestClient.get(url)
         all_items = JSON.parse(response)['results']

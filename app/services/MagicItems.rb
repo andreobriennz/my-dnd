@@ -18,10 +18,12 @@ class MagicItems
         all_items = JSON.parse(response)['results'].first
     end
 
-    def get_my_items # all_items
+    def get_my_items
         return [] if !Current.user
 
         saved_items = Current.user.saved_magic_items
+        return [] if Current.user.saved_magic_items.length == 0
+
         url = "https://api.open5e.com/v1/magicitems/?slug__in=#{saved_items.join(',')}"
         response = RestClient.get(url)
         all_items = JSON.parse(response)['results']
