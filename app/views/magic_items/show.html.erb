@@ -1,0 +1,17 @@
+<div class="container-content mt-8 stack-sm">
+    <h1 class="heading-mega"><%= @item['name'] %></h1>
+    <p><strong>Type: <%= @item['type'] %></strong></p>
+    <p><strong>Rarity: <%= @item['rarity'].titleize %></strong></p>
+
+    <p><strong>Description</strong></p>
+    <p><%= markdown @item['desc'] %></p>
+    
+    <% if @item['requires_attunement'] != '' %>
+        <p><strong>Requires Atunement</strong></p>
+        <p><%= @item['requires_attunement'] %></p>
+    <% end %>
+
+    <div class="my-5">
+        <%= save_magic_item_button @item['slug'] %>
+    </div>
+</div>

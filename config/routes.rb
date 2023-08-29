@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
     # api based pages - view and save items
     get "/magic-items", to: "magic_items#index"
-    get "/magic-items/json", to: "magic_items#index_json"
+    get "magic-items/:slug", to: "magic_items#show"
     patch "/user/magic-items", to: "user#update_magic_items"
 
     get "/monsters", to: "monsters#index"
